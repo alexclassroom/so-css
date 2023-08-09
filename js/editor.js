@@ -425,7 +425,8 @@
 		/**
 		 * Toggle if this is expanded or not
 		 */
-		toggleExpand: function () {
+		toggleExpand: function ( e ) {
+			$( '.editor-expand' ).attr( 'title', $( '.so-css-icon-' + ( this.isExpanded() ? 'expand' : 'compress ') ).attr( 'title' ) );
 			this.$el.toggleClass( 'expanded' );
 			this.scaleEditor();
 		},
@@ -1907,5 +1908,27 @@ jQuery( function ( $ ) {
 
 	$( '.button-primary[name="siteorigin_custom_css_save"]' ).on( 'click', function() {
 		$( '#so-custom-css-form' ).trigger( 'submit' );
+	} );
+
+	$( '.installer-link' ).on( 'click', function( e ) {
+		e.preventDefault();
+		$( this ).hide();
+		$( '.installer-container' ).slideDown( 'fast' );
+	} );
+
+	$( '.installer_status' ).on( 'change', function() {
+		var $$ = $( this );
+		$$.prop( 'disabled', true );
+		jQuery.post(
+			ajaxurl,
+			{
+				action: 'so_installer_status',
+				nonce: $$.data( 'nonce' ),
+				status: $$.is( ':checked' )
+			},
+			function() {
+				$$.prop( 'disabled', false );
+			}
+		);
 	} );
 } );
