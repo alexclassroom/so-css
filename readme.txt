@@ -71,6 +71,9 @@ SiteOrigin Premium includes access to our professional email support service, pe
 
 == Changelog ==
 
+= 1.5.8 - 11 August 2023 =
+* Updated the SiteOrigin Installer submodule.
+
 = 1.5.7 - 09 August 2023 =
 * Updated the expand/compress title depending on the state in the visual editor.
 * Updated the "Tested up to" version in the readme.txt file from 6.2 to 6.3, indicating compatibility with WordPress version 6.3.
