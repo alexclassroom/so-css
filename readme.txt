@@ -1,7 +1,7 @@
 === SiteOrigin CSS ===
 Tags: css, visual css, css editor, design, customize
 Requires at least: 3.9
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: trunk
 Build time: unbuilt
 License: GPLv2 or later
@@ -70,6 +70,10 @@ Free support is available on the [SiteOrigin support forums](https://siteorigin.
 SiteOrigin Premium includes access to our professional email support service, perfect for those times when you need fast and effective technical support. We're standing by to assist you in any way we can.
 
 == Changelog ==
+
+= 1.5.9 - 11 November 2023 =
+* Updated Tested up to tag.
+* Updated SiteOrigin Installer.
 
 = 1.5.8 - 11 August 2023 =
 * Updated the SiteOrigin Installer submodule.
