@@ -1,5 +1,5 @@
 === SiteOrigin CSS ===
-Tags: css, visual css, css editor, design, customize
+Tags: css editor, visual css, live editing, theme editor, website styling
 Requires at least: 3.9
 Tested up to: 6.4
 Stable tag: trunk
