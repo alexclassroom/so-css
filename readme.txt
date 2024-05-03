@@ -1,6 +1,7 @@
 === SiteOrigin CSS ===
 Tags: css, visual css, css editor, design, customize
 Requires at least: 3.9
+Requires PHP: 7.0.0
 Tested up to: 6.5
 Stable tag: trunk
 Build time: unbuilt
