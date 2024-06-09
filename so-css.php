@@ -900,6 +900,12 @@ class SiteOrigin_CSS {
 			return;
 		}
 
+		// Certain themes serve their main CSS from a file that's different to
+		// what's initially set.
+		$theme_src_compatibility = array(
+			'divi-style' => get_template_directory_uri() . '/style.min.css',
+		);
+
 		// Make each of the scripts inline
 		foreach ( $wp_styles->queue as $handle ) {
 			if ( $handle === 'siteorigin-css-inspector' || $handle === 'dashicons' ) {
@@ -910,6 +916,11 @@ class SiteOrigin_CSS {
 			if ( empty( $style->src ) || substr( $style->src, 0, 4 ) !== 'http' ) {
 				continue;
 			}
+
+			if ( isset( $theme_src_compatibility[ $handle ] ) ) {
+				$style->src = $theme_src_compatibility[ $handle ];
+			}
+
 			$response = wp_remote_get( $style->src );
 
 			if ( is_wp_error( $response ) || $response['response']['code'] !== 200 || empty( $response['body'] ) ) {
@@ -917,6 +928,7 @@ class SiteOrigin_CSS {
 			}
 
 			$css = $response['body'];
+
 			$css = preg_replace( array_keys( $regex ), $regex, $css );
 
 			?>

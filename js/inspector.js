@@ -9,7 +9,7 @@
         view : { },
         fn : {}
     };
-    
+
     var getSelectorSpecificity = function(selector, useParts) {
         var specificities = [];
         var ruleSpecificity = SPECIFICITY.calculate( selector );
@@ -148,7 +148,7 @@
 
             var $h = this.$('.socss-hierarchy');
             $h.empty();
-    
+
             if ( !el ) {
                 return;
             }
@@ -198,6 +198,41 @@
                     return false;
                 }
             } );
+
+            // If the selected element is a link, check if it's a menu item.
+            if ( el.is( 'a' ) ) {
+                const parent = el.closest( '.menu-item' );
+                if ( parent.length ) {
+                    // Certain themes don't use the menu-item class.
+                    // To make it easier for users, we add the parent classes to the selectors array.
+                    const parentClasses = parent.attr( 'class' ).split( /\s+/ );
+
+                    const existingSelectors = new Set( selectors.map( s => s.selector ) );
+
+                    // If a class isn't already present, add it to the selectors array.
+                    parentClasses.forEach( cls => {
+                        if ( ! existingSelectors.has( selector ) ) {
+                            selectors.push( {
+                                selector: '.' + cls,
+                                specificity: getSelectorSpecificity( '.' + cls )
+                            } );
+                        }
+                    } );
+
+                    // Move the * selector to the end of the selectors list.
+                    selectors.sort( ( a, b ) => {
+                        if ( a.selector === '*' ) {
+                            return 1;
+                        }
+
+                        if ( b.selector === '*' ) {
+                            return -1;
+                        }
+
+                        return 0;
+                    } );
+                }
+            }
 
             var container = this.$('.socss-selectors-window').empty();
 
@@ -351,7 +386,7 @@
                 if (typeof rules[i].selectors === 'undefined') {
                     continue;
                 }
-    
+
                 for(var j = 0; j < rules[i].selectors.length; j++) {
                     selectors = selectors.concat( getSelectorSpecificity( rules[i].selectors[j] ) );
                 }
@@ -362,10 +397,10 @@
         $('body *').each(function(){
             var $$ = $(this);
             var elName = socss.fn.elSelector( $$ );
-            
+
             selectors = selectors.concat(getSelectorSpecificity(elName));
         });
-    
+
         var $body = $('body');
         var bName = socss.fn.elSelector($body);
         selectors = selectors.concat(getSelectorSpecificity(bName, true));
@@ -417,7 +452,7 @@
                 case 'page':
                 case 'supports':
                     return true;
-                  
+
             }
             return false;
         };
@@ -431,7 +466,7 @@
                 ) {
                     continue;
                 }
-                
+
                 for(var j = 0; j < rule.selectors.length; j++) {
                     var ruleSpecificity = SPECIFICITY.calculate( rule.selectors[j] );
                     for (var l = 0; l < ruleSpecificity.length; l++) {
