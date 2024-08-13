@@ -72,6 +72,10 @@ SiteOrigin Premium includes access to our professional email support service, pe
 
 == Changelog ==
 
+= 1.5.11 - 13 August 2024 =
+* Added Divi theme compatibility.
+* Accounted for for themes that don't use menu item selectors by adding them automatically.
+
 = 1.5.10 - 31 May 2024 =
 * Updated SiteOrigin Installer.
 * Updated Tested up to tag.
