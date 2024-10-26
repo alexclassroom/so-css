@@ -362,10 +362,14 @@ class SiteOrigin_CSS {
 	 * Action to run on the admin action.
 	 */
 	public function action_admin_menu() {
-		add_theme_page( esc_html__( 'Custom CSS', 'so-css' ), esc_html__( 'Custom CSS', 'so-css' ), 'edit_theme_options', 'so_custom_css', array(
-			$this,
-			'display_admin_page',
-		) );
+		add_theme_page(
+			esc_html__( 'Custom CSS', 'so-css' ),
+			esc_html__( 'Custom CSS', 'so-css' ),
+			'edit_theme_options',
+			'so_custom_css',
+			array( $this, 'display_admin_page' ),
+			2
+		);
 
 		if ( current_user_can( 'edit_theme_options' ) && isset( $_POST['siteorigin_custom_css'] ) ) {
 			check_admin_referer( 'custom_css', '_sononce' );
