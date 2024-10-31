@@ -80,6 +80,8 @@ class SiteOrigin_CSS {
 				add_filter( 'siteorigin_add_installer', array( $this, 'manage_installer' ) );
 			}
 		}
+
+		register_uninstall_hook( __FILE__, array( 'SiteOrigin_CSS', 'uninstall' ) );
 	}
 
 	/**
@@ -995,6 +997,23 @@ class SiteOrigin_CSS {
 				$version
 			);
 		}
+	}
+
+	/**
+	 * Uninstall hook to clean up plugin data.
+	 *
+	 * This method is called when the plugin is uninstalled. It deletes
+	 * options related to the plugin from the WordPress database.
+	 *
+	 * Things like custom CSS are not deleted. This is to prevent data loss.
+	 *
+	 * @return void
+	 */
+	public function uninstall() {
+		delete_option( 'so_css_version' );
+		delete_option( 'so_css_editor_theme' );
+		delete_option( 'so_css_legacy_menu' );
+		delete_option( 'siteorigin_custom_css_revisions[' . $this->theme . ']' );
 	}
 }
 
