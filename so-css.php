@@ -369,7 +369,8 @@ class SiteOrigin_CSS {
 			'edit_theme_options',
 			'so_custom_css',
 			array( $this, 'display_admin_page' ),
-			2
+			// If the legacy flag is present, use the automatic position.
+			get_option( 'so_css_legacy_menu' ) ? null : 2
 		);
 
 		if ( current_user_can( 'edit_theme_options' ) && isset( $_POST['siteorigin_custom_css'] ) ) {
