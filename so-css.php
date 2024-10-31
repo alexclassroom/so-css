@@ -44,6 +44,7 @@ class SiteOrigin_CSS {
 		add_action( 'wp_head', array( $this, 'enqueue_css' ), 20 );
 
 		// All the admin actions
+		add_action( 'admin_init', array( $this, 'version_check' ) );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'dequeue_admin_scripts' ), 19 );
@@ -963,6 +964,36 @@ class SiteOrigin_CSS {
 		$revision_times = array_keys( $revisions );
 
 		return $revision_times[0];
+	}
+
+	/**
+	 * Checks and updates the plugin version.
+	 *
+	 * This method checks the current version of the plugin stored in the database.
+	 * If no version is set, it checks if the site already had SO CSS installed by
+	 * looking for custom CSS. If custom CSS is found, it flags the legacy menu position.
+	 * It also updates the stored version if it is not set or if it is outdated.
+	 *
+	 * @return void
+	 */
+	public function version_check() {
+		$version = get_option( 'so_css_version' );
+
+		// If there's no version set, check if this site already
+		// had SO CSS installed by checking for custom CSS.
+		if ( empty( $version ) && ! empty( $this->get_custom_css( $this->theme ) ) ) {
+			update_option( 'so_css_legacy_menu', true );
+		}
+
+		if ( empty( $version ) || version_compare( $version, SOCSS_VERSION, '<' ) ) {
+			update_option( 'so_css_version', SOCSS_VERSION );
+
+			do_action(
+				'so_css_version_update',
+				SOCSS_VERSION,
+				$version
+			);
+		}
 	}
 }
 
