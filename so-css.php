@@ -401,7 +401,10 @@ class SiteOrigin_CSS {
 				$_POST['so_css_editor_theme'] == 'neat' ||
 				$_POST['so_css_editor_theme'] == 'ambiance'
 			) {
-				update_option( 'so_css_editor_theme', $_POST['so_css_editor_theme'] );
+				update_option(
+					'so_css_editor_theme',
+					sanitize_text_field( $_POST['so_css_editor_theme'] )
+				);
 			}
 		}
 	}
