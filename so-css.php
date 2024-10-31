@@ -102,8 +102,9 @@ class SiteOrigin_CSS {
 	public function manage_installer( $status ) {
 		// If the user hasn't enabled/disabled the installer, disable it by default.
 		if ( empty( get_option( 'siteorigin_installer' ) ) ) {
-				$status = false;
+			$status = false;
 		}
+
 		return $status;
 	}
 
