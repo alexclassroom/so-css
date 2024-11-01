@@ -43,6 +43,8 @@ class SiteOrigin_CSS {
 		// Priority 20 is necessary to ensure our CSS takes precedence.
 		add_action( 'wp_head', array( $this, 'enqueue_css' ), 20 );
 
+		add_filter( 'siteorigin_css_enqueue_css', array( $this, 'css_output_location' ), 9, 1 );
+
 		// All the admin actions
 		add_action( 'admin_init', array( $this, 'version_check' ) );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
@@ -313,6 +315,26 @@ class SiteOrigin_CSS {
 	}
 
 	/**
+	 * Changes the CSS output location based on user settings.
+	 *
+	 * This method retrieves the CSS output location setting from the
+	 * `so_css_output_location` option and returns true if the setting is
+	 * set to 'file' and false if it is set to 'inline'.
+	 *
+	 * @param string|null $location The unused default location value.
+	 *
+	 * @return bool True if the CSS should be output in a dedicated file, false if it should be inline.
+	 */
+	public function css_output_location( $location = null ) {
+		$output_location =  get_option(
+			'so_css_output_location',
+			'inline'
+		);
+
+		return $output_location === 'file';
+	}
+
+	/**
 	 * Enqueue the custom CSS for the given theme and post id combination.
 	 *
 	 * @param $theme string The name of the theme for which to enqueue custom CSS.
@@ -403,6 +425,19 @@ class SiteOrigin_CSS {
 				update_option(
 					'so_css_editor_theme',
 					sanitize_text_field( $_POST['so_css_editor_theme'] )
+				);
+			}
+
+			if (
+				! empty( $_POST['so_css_output_location'] ) &&
+				(
+					$_POST['so_css_output_location'] === 'file' ||
+					$_POST['so_css_output_location'] === 'inline'
+				)
+			) {
+				update_option(
+					'so_css_output_location',
+					sanitize_text_field( $_POST['so_css_output_location'] )
 				);
 			}
 		}
@@ -614,6 +649,7 @@ class SiteOrigin_CSS {
 		$theme = basename( get_template_directory() );
 
 		$editor_theme = get_option( 'so_css_editor_theme', 'neat' );
+		$output_location = get_option( 'so_css_output_location', 'inline' );
 
 		include plugin_dir_path( __FILE__ ) . 'tpl/page.php';
 	}
@@ -976,13 +1012,25 @@ class SiteOrigin_CSS {
 	 *
 	 * This method checks the current version of the plugin stored in the database.
 	 * If no version is set, it checks if the site already had SO CSS installed by
-	 * looking for custom CSS. If custom CSS is found, it flags the legacy menu position.
+	 * looking for custom CSS. If custom CSS is found, it sets the CSS output location
+	 * to 'inline'; otherwise, it sets it to 'file'.
+	 *
 	 * It also updates the stored version if it is not set or if it is outdated.
+	 * Additionally, it triggers the 'so_css_version_update' action when the version is updated.
 	 *
 	 * @return void
 	 */
 	public function version_check() {
 		$version = get_option( 'so_css_version' );
+
+		// If there's no version set, check if this site already
+		// had SO CSS installed by checking for custom CSS.
+		if ( empty( $version ) ) {
+			update_option(
+				'so_css_output_location',
+				! empty( $this->get_custom_css( $this->theme ) ) ? 'inline' : 'file'
+			);
+		}
 
 		if ( empty( $version ) || version_compare( $version, SOCSS_VERSION, '<' ) ) {
 			update_option( 'so_css_version', SOCSS_VERSION );
@@ -1008,6 +1056,7 @@ class SiteOrigin_CSS {
 	public function uninstall() {
 		delete_option( 'so_css_version' );
 		delete_option( 'so_css_editor_theme' );
+		delete_option( 'so_css_output_location' );
 		delete_option( 'siteorigin_custom_css_revisions[' . $this->theme . ']' );
 	}
 }
