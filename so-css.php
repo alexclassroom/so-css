@@ -992,6 +992,12 @@ class SiteOrigin_CSS {
 			update_option( 'so_css_legacy_menu', true );
 		}
 
+		// It's possible users may want to use the new menu position after updating.
+		// We'll remove the legacy menu flag if the filter is set.
+		if ( apply_filters( 'so_css_remove_legacy_menu', false ) ) {
+			delete_option( 'so_css_legacy_menu' );
+		}
+
 		if ( empty( $version ) || version_compare( $version, SOCSS_VERSION, '<' ) ) {
 			update_option( 'so_css_version', SOCSS_VERSION );
 
