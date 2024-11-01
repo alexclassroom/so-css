@@ -372,8 +372,6 @@ class SiteOrigin_CSS {
 			'edit_theme_options',
 			'so_custom_css',
 			array( $this, 'display_admin_page' ),
-			// If the legacy flag is present, use the automatic position.
-			get_option( 'so_css_legacy_menu' ) ? null : 2
 		);
 
 		if ( current_user_can( 'edit_theme_options' ) && isset( $_POST['siteorigin_custom_css'] ) ) {
@@ -986,18 +984,6 @@ class SiteOrigin_CSS {
 	public function version_check() {
 		$version = get_option( 'so_css_version' );
 
-		// If there's no version set, check if this site already
-		// had SO CSS installed by checking for custom CSS.
-		if ( empty( $version ) && ! empty( $this->get_custom_css( $this->theme ) ) ) {
-			update_option( 'so_css_legacy_menu', true );
-		}
-
-		// It's possible users may want to use the new menu position after updating.
-		// We'll remove the legacy menu flag if the filter is set.
-		if ( apply_filters( 'so_css_remove_legacy_menu', false ) ) {
-			delete_option( 'so_css_legacy_menu' );
-		}
-
 		if ( empty( $version ) || version_compare( $version, SOCSS_VERSION, '<' ) ) {
 			update_option( 'so_css_version', SOCSS_VERSION );
 
@@ -1022,7 +1008,6 @@ class SiteOrigin_CSS {
 	public function uninstall() {
 		delete_option( 'so_css_version' );
 		delete_option( 'so_css_editor_theme' );
-		delete_option( 'so_css_legacy_menu' );
 		delete_option( 'siteorigin_custom_css_revisions[' . $this->theme . ']' );
 	}
 }
