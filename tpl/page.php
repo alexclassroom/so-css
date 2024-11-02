@@ -96,17 +96,13 @@ if ( ! empty( $current_revision ) ) {
 							aria-labelledby="so_css_output_location_label"
 							aria-described_by="so_css_output_location_description"
 						>
-							<option value="file" <?php selected( 'file', $output_location ); ?>><?php esc_attr_e( 'Dedicated file', 'so-css' ); ?></option>
+							<option value="file" <?php selected( 'file', $output_location ); ?>><?php esc_attr_e( 'Dedicated File', 'so-css' ); ?></option>
 							<option value="inline" <?php selected( 'inline', $output_location ); ?>><?php esc_attr_e( 'Inline', 'so-css' ); ?></option>
 						</select>
 
 						<p id="so_css_output_location_description" class="description">
 							<?php
-							printf(
-								esc_html__( 'Outputting CSS to a dedicated file will allow for improved browser caching, but may cause a %1$sCLS%2$s.', 'so-css' ),
-								'<abbr title="' . esc_attr__( 'Cumulative Layout Shift', 'so-css' ) . '">',
-								'</abbr>'
-							);
+							esc_html_e( 'Dedicated CSS File offers best performance, Internal CSS embeds styles in page HTML.', 'so-css' );
 							?>
 						</p>
 					</div>
