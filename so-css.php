@@ -393,7 +393,7 @@ class SiteOrigin_CSS {
 			esc_html__( 'Custom CSS', 'so-css' ),
 			'edit_theme_options',
 			'so_custom_css',
-			array( $this, 'display_admin_page' ),
+			array( $this, 'display_admin_page' )
 		);
 
 		if ( current_user_can( 'edit_theme_options' ) && isset( $_POST['siteorigin_custom_css'] ) ) {
