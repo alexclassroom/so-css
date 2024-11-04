@@ -328,7 +328,7 @@ class SiteOrigin_CSS {
 	public function css_output_location( $location = null ) {
 		$output_location =  get_option(
 			'so_css_output_location',
-			'inline'
+			'file'
 		);
 
 		return $output_location === 'file';
@@ -649,7 +649,7 @@ class SiteOrigin_CSS {
 		$theme = basename( get_template_directory() );
 
 		$editor_theme = get_option( 'so_css_editor_theme', 'neat' );
-		$output_location = get_option( 'so_css_output_location', 'inline' );
+		$output_location = get_option( 'so_css_output_location', 'file' );
 
 		include plugin_dir_path( __FILE__ ) . 'tpl/page.php';
 	}
