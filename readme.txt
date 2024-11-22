@@ -2,7 +2,7 @@
 Tags: css editor, visual css, live editing, theme editor, website styling
 Requires at least: 3.9
 Requires PHP: 7.0.0
-Tested up to: 6.6
+Tested up to: 6.7
 Stable tag: trunk
 Build time: unbuilt
 License: GPLv2 or later
@@ -71,6 +71,10 @@ Free support is available on the [SiteOrigin support forums](https://siteorigin.
 SiteOrigin Premium includes access to our professional email support service, perfect for those times when you need fast and effective technical support. We're standing by to assist you in any way we can.
 
 == Changelog ==
+
+= 1.6.0 - 22 November 2024 =
+* Added `Visual Editor: Decoration > Background Attachment` setting.
+* Added CSS Ouput Location setting. Dedicated CSS File offers best performance, Internal CSS embeds styles in page HTML.
 
 = 1.5.11 - 13 August 2024 =
 * Added Divi theme compatibility.
