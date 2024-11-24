@@ -319,11 +319,11 @@ class SiteOrigin_CSS {
 	 *
 	 * This method retrieves the CSS output location setting from the
 	 * `so_css_output_location` option and returns true if the setting is
-	 * set to 'file' and false if it is set to 'inline'.
+	 * set to 'file'. Otherwise false is returned.
 	 *
 	 * @param string|null $location The unused default location value.
 	 *
-	 * @return bool True if the CSS should be output in a dedicated file, false if it should be inline.
+	 * @return bool True if the CSS should be output in a dedicated file.
 	 */
 	public function css_output_location( $location = null ) {
 		$output_location =  get_option(
@@ -432,7 +432,7 @@ class SiteOrigin_CSS {
 				! empty( $_POST['so_css_output_location'] ) &&
 				(
 					$_POST['so_css_output_location'] === 'file' ||
-					$_POST['so_css_output_location'] === 'inline'
+					$_POST['so_css_output_location'] === 'onpage'
 				)
 			) {
 				update_option(
@@ -1023,12 +1023,12 @@ class SiteOrigin_CSS {
 	public function version_check() {
 		$version = get_option( 'so_css_version' );
 
-		// If there's no version set, check if this site already
-		// had SO CSS installed by checking for custom CSS.
-		if ( empty( $version ) ) {
+		// If there's no version set or it's set to 1.6.0, check if 
+		// this site already had SO CSS installed by checking for custom CSS.
+		if ( empty( $version ) || $version === '1.6.0' ) {
 			update_option(
 				'so_css_output_location',
-				! empty( $this->get_custom_css( $this->theme ) ) ? 'inline' : 'file'
+				empty( $this->get_custom_css( $this->theme ) ) ? 'onpage' : 'file'
 			);
 		}
 
