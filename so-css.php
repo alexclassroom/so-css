@@ -432,7 +432,7 @@ class SiteOrigin_CSS {
 				! empty( $_POST['so_css_output_location'] ) &&
 				(
 					$_POST['so_css_output_location'] === 'file' ||
-					$_POST['so_css_output_location'] === 'onpage'
+					$_POST['so_css_output_location'] === 'inline'
 				)
 			) {
 				update_option(
@@ -1026,10 +1026,7 @@ class SiteOrigin_CSS {
 		// If there's no version set or it's set to 1.6.0, check if 
 		// this site already had SO CSS installed by checking for custom CSS.
 		if ( empty( $version ) || $version === '1.6.0' ) {
-			update_option(
-				'so_css_output_location',
-				empty( $this->get_custom_css( $this->theme ) ) ? 'onpage' : 'file'
-			);
+			update_option( 'so_css_output_location', 'file' );
 		}
 
 		if ( empty( $version ) || version_compare( $version, SOCSS_VERSION, '<' ) ) {
