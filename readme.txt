@@ -72,6 +72,9 @@ SiteOrigin Premium includes access to our professional email support service, pe
 
 == Changelog ==
 
+= 1.6.1 - 25 November 2024 =
+* CSS Output Location: Additional check to ensure the default is Dedicated File.
+
 = 1.6.0 - 22 November 2024 =
 * Added `Visual Editor: Decoration > Background Attachment` setting.
 * Added CSS Ouput Location setting. Dedicated CSS File offers best performance, Internal CSS embeds styles in page HTML.
