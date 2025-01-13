@@ -83,7 +83,7 @@ class SiteOrigin_CSS {
 			}
 		}
 
-		register_uninstall_hook( __FILE__, array( 'SiteOrigin_CSS', 'uninstall' ) );
+		register_uninstall_hook( __FILE__, array( $this, 'uninstall' ) );
 	}
 
 	/**
