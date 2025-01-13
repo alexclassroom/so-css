@@ -72,6 +72,9 @@ SiteOrigin Premium includes access to our professional email support service, pe
 
 == Changelog ==
 
+= 1.6.2 - 13 January 2025 =
+* Fixed uninstall process to prevent PHP fatal error by updating the `register_uninstall_hook` callback to use a valid instance method.
+
 = 1.6.1 - 25 November 2024 =
 * CSS Output Location: Additional check to ensure the default is Dedicated File.
 
