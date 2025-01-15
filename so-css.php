@@ -83,7 +83,7 @@ class SiteOrigin_CSS {
 			}
 		}
 
-		register_uninstall_hook( __FILE__, array( $this, 'uninstall' ) );
+		register_uninstall_hook( __FILE__, array( 'SiteOrigin_CSS', 'uninstall' ) );
 	}
 
 	/**
@@ -1050,11 +1050,12 @@ class SiteOrigin_CSS {
 	 *
 	 * @return void
 	 */
-	public function uninstall() {
+	public static function uninstall() {
+		$theme = basename( get_template_directory() );
 		delete_option( 'so_css_version' );
 		delete_option( 'so_css_editor_theme' );
 		delete_option( 'so_css_output_location' );
-		delete_option( 'siteorigin_custom_css_revisions[' . $this->theme . ']' );
+		delete_option( 'siteorigin_custom_css_revisions[' . $theme . ']' );
 	}
 }
 
